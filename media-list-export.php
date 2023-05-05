@@ -5,7 +5,7 @@
  * Description:         Show a list of uploaded media and add the ability to export it
  * Author:              Jason Lawton
  * Author URI:          https://jasonlawton.com/
- * Version:             0.1
+ * Version:             0.2
  * Minimum PHP Version: 7.3
  * Text Domain:         medialistexport
  * License:             GPLv2 or later (license.txt)
@@ -78,7 +78,7 @@ function jhl_mle_options_page(  ) {
                                 <?php the_title(); ?>
                             </td>
                             <td width="5%"><?php echo get_the_date(); ?></td>
-                            <td width="15%"><?php echo filesize( $post->attachment_path ); ?></td>
+                            <td width="15%"><?php echo nice_filesize( filesize( $post->attachment_path ) ); ?></td>
                             <td width="20%"><?php echo $post->post_mime_type; ?></td>
                         </tr>
                         <?php
@@ -99,4 +99,10 @@ function jhl_mle_options_page(  ) {
         </script>
     </div>
     <?php
+}
+
+// from https://gist.github.com/liunian/9338301?permalink_comment_id=1970661#gistcomment-1970661
+function nice_filesize($bytes) {
+    $i = floor(log($bytes, 1024));
+    return round($bytes / pow(1024, $i), [0,0,2,2,3][$i]).['B','kB','MB','GB','TB'][$i];
 }
